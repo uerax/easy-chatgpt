@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <!-- 必须的 meta 标签 -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap 的 CSS 文件 -->
+    <script src="js/jquery-3.6.3.min.js"></script>
+    <link rel="stylesheet" href="css/global.css"> 
+    <script src="js/bootstrap.min.js"></script>
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <!-- As a heading -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+          <a class="navbar-brand" href="#">ChatGPT</a>
+        </div>
+      </nav>
+    <div class="container-fluid main-contain">
+        
+        <div class="input-group mb-3 input1">
+            <input id="key" type="text" class="form-control keys" placeholder="输入你chatGPT key" aria-label="输入你chatGPT key">
+            </div>
+
+        <div class="input-group mb-3 input1">
+        <input id="question" type="text" class="form-control" placeholder="输入你的问题" aria-label="输入你的问题">
+        </div>
+        <div class="input-group input1">
+            <button class="btn btn-success btn-lg bt1" type="button" onclick="req()">提问</button>
+        </div>
+        <div class="input-group input1">
+        
+        <textarea id="answer" class="form-control" aria-label="With textarea" rows="10" placeholder="点击提问后等待AI回答,长时间不回复刷新重新提问" disabled></textarea>
+        </div>
+    </div>
+  </body>
+  <script>
+    function req() {
+        var YOUR_KEY = $.trim($("#key").val())
+        if (YOUR_KEY.length == 0) {
+            $('#answer').val("请输入你的密钥,否则无法使用")
+        }
+        var question = $("#question").val()
+        $('#answer').val("请求中......")
+        var settings = {
+  "url": "https://api.openai.com/v1/completions",
+  "method": "POST",
+  "timeout": 0,
+  "headers": {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer " + YOUR_KEY
+  },
+  "data": JSON.stringify({
+    "model": "text-davinci-003",
+    "prompt": question,
+    "temperature": 0,
+    "max_tokens": 2000
+  }),
+  contentType: "application/json",
+    dataType: 'json'
+};
+
+$.ajax(settings).done(function (response) {
+    $('#answer').val($.trim(response.choices[0].text))
+})
+    }
+  </script>
+</html>
