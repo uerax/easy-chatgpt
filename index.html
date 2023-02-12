@@ -29,7 +29,7 @@
             </div>
 
         <div class="input-group mb-3 input1">
-        <textarea id="question" rows="5" class="form-control" placeholder="输入你的问题" aria-label="输入你的问题"></textarea>
+        <textarea id="question" type="text" class="form-control" placeholder="输入你的问题" aria-label="输入你的问题"></textarea>
         </div>
         <div class="input-group input1">
             <button class="btn btn-success btn-lg bt1" type="button" onclick="req()">提问</button>
@@ -45,6 +45,7 @@
         var YOUR_KEY = $.trim($("#key").val())
         if (YOUR_KEY.length == 0) {
             $('#answer').val("请输入你的密钥,否则无法使用")
+            return
         }
         var question = $("#question").val()
         $('#answer').val("请求中......")
