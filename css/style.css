@@ -11,11 +11,12 @@ body {
     font: 14px/20px "Lato", Arial, sans-serif;
     padding: 40px 0;
     color: white
+    
 }
 
 .container {
     margin: 0 auto;
-    width: 750px;
+    width: 650px;
     background: #444753;
     border-radius: 5px;
     padding: 0;
@@ -115,7 +116,7 @@ body {
     padding: 30px 30px 20px;
     border-bottom: 2px solid white;
     overflow-y: scroll;
-    height: 575px
+    height: 475px
 }
 
 .chat .chat-history .message-data {
