@@ -33,7 +33,7 @@
                 this.scrollToBottom(); 
                 setTimeout(function () { 
                     var d = { 
-                        response: this.getRandomItem(this.messageToSend.trim()),
+                        response: this.senQuestion(this.messageToSend.trim()),
                         time: this.getCurrentTime() 
                     }; 
                     this.$chatHistoryList.append(f(d)); 
@@ -57,7 +57,26 @@
         getCurrentTime: function () { 
             return new Date().toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3") 
         }, 
+        senQuestion: function (c) {
+            let ans = "请求失败,请重新发送"
+            $.ajax({
+                // 
+                url: "",
+                data: JSON.stringify({
+                    "question": c
+                }),
+                method: "POST",
+                async: false,
+                success: function(response) {
+                    ans = response.answer.trim()
+                }
+            })
+            return ans
+        },
         getRandomItem: function (c) {
+            // 此方法如果作为建站使用会因为
+            // 不同ip使用了同一个apikey被openai给ban掉
+            // 如果作为自己使用可以换成这个方法
             let ans = "请求失败,请重新发送"
             // 在此处输入你的openai的apikey
             var apikey = ""
