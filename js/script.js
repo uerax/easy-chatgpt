@@ -60,7 +60,7 @@
         getRandomItem: function (c) {
             let ans = "请求失败,请重新发送"
             // 在此处输入你的openai的apikey
-            var apikey = "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"
+            var apikey = ""
             $.ajax({
                 url: "https://api.openai.com/v1/completions",
                 data: JSON.stringify({
