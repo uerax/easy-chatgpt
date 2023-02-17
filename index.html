@@ -17,59 +17,70 @@
   </head>
   <body>
     <!-- As a heading -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-          <a class="navbar-brand" href="#">ChatGPT</a>
-        </div>
-      </nav>
-    <div class="container-fluid main-contain">
-        
-        <div class="input-group mb-3 input1">
-            <input id="key" type="text" class="form-control keys" placeholder="输入你chatGPT key" aria-label="输入你chatGPT key">
-            </div>
+    <div class="container clearfix">
+      <div class="chat">
+          <div class="chat-header clearfix">
+              <img src="image/ai.jpg" width='50' height='50' alt="avatar">
+              <div class="chat-about">
+                  <div class="chat-with">
+                      ChatAI
+                  </div>
+              </div>
+          </div><!-- end chat-header -->
+          <div class="chat-history">
+              <ul style="list-style:none">
+                  <!-- <li class="clearfix">
+                      <div class="message-data align-right">
+                          <span class="message-data-time">10:10 AM,Today</span>&nbsp;&nbsp;<span class="message-data-name">Olia</span><i class="fa fa-circle me"></i>
+                      </div>
+                      <div class="message other-message float-right">
+                          Hi Vincent,how are you? How is the project coming along?
+                      </div>
+                  </li>
+                  <li>
+                      <div class="message-data">
+                          <span class="message-data-name"><i class="fa fa-circle online"></i>Vincent</span><span class="message-data-time">10:12 AM,Today</span>
+                      </div>
+                      <div class="message my-message">
+                          Are we meeting today? Project has been already finished and I have results to show you.
+                      </div>
+                  </li> -->
+              </ul>
+          </div><!-- end chat-history -->
+          <div class="chat-message clearfix">
+              <textarea name="message-to-send" id="message-to-send" placeholder="发送问题后请耐心等待(高峰期或者复杂问题可能要等待1-2分钟), 如果长时间没有回复刷新后重试" rows="3"></textarea>  <button>Send</button>
+          </div><!-- end chat-message -->
+      </div><!-- end chat -->
+  </div><!-- end container -->
+  <script id="message-template" type="text/x-handlebars-template">
+  <li class="clearfix">
+      <div class="message-data align-right">
+          <span class="message-data-time">{{time}}, Today</span> &nbsp;
+          <span class="message-data-name">YOU</span>
+          <i class="fa fa-circle me"></i>
+      </div>
+      <div class="message other-message float-right">
+          {{messageOutput}}
+      </div>
+  </li>
+  </script> 
+  <script id="message-response-template" type="text/x-handlebars-template">
 
-        <div class="input-group mb-3 input1">
-        <textarea id="question" type="text" class="form-control" placeholder="输入你的问题" aria-label="输入你的问题"></textarea>
-        </div>
-        <div class="input-group input1">
-            <button class="btn btn-success btn-lg bt1" type="button" onclick="req()">提问</button>
-        </div>
-        <div class="input-group input1">
-        
-        <textarea id="answer" class="form-control" aria-label="With textarea" rows="10" placeholder="点击提问后等待AI回答,长时间不回复刷新重新提问" disabled></textarea>
-        </div>
-    </div>
+  <li>
+      <div class="message-data">
+          <span class="message-data-name"><i class="fa fa-circle online"></i> ChatAI</span>
+          <span class="message-data-time">{{time}}, Today</span>
+      </div>
+      <div class="message my-message">
+          {{response}}
+      </div>
+  </li>
+  </script> <!-- partial -->
+   
+  <script src="js/handlebars.min.js"></script> 
+  <!-- <script src="js/list.min.js"></script> -->
+  <script src="js/script.js"></script>
+
   </body>
-  <script>
-    function req() {
-        var YOUR_KEY = $.trim($("#key").val())
-        if (YOUR_KEY.length == 0) {
-            $('#answer').val("请输入你的密钥,否则无法使用")
-            return
-        }
-        var question = $("#question").val()
-        $('#answer').val("请求中......")
-        var settings = {
-  "url": "https://api.openai.com/v1/completions",
-  "method": "POST",
-  "timeout": 0,
-  "headers": {
-    "Content-Type": "application/json",
-    "Authorization": "Bearer " + YOUR_KEY
-  },
-  "data": JSON.stringify({
-    "model": "text-davinci-003",
-    "prompt": question,
-    "temperature": 0,
-    "max_tokens": 2000
-  }),
-  contentType: "application/json",
-    dataType: 'json'
-};
 
-$.ajax(settings).done(function (response) {
-    $('#answer').val($.trim(response.choices[0].text))
-})
-    }
-  </script>
 </html>
