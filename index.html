@@ -50,7 +50,7 @@
         var question = $("#question").val()
         $('#answer').val("请求中......")
         var settings = {
-  "url": "https://api.openai.com/v1/completions",
+  "url": "https://api.openai.com/v1/chat/completions",
   "method": "POST",
   "timeout": 0,
   "headers": {
@@ -58,17 +58,18 @@
     "Authorization": "Bearer " + YOUR_KEY
   },
   "data": JSON.stringify({
-    "model": "text-davinci-003",
-    "prompt": question,
-    "temperature": 0,
-    "max_tokens": 2000
+    "model": "gpt-3.5-turbo",
+    "messages": [{
+      "role": "user", 
+      "content": question
+    }],
   }),
   contentType: "application/json",
     dataType: 'json'
 };
 
 $.ajax(settings).done(function (response) {
-    $('#answer').val($.trim(response.choices[0].text))
+    $('#answer').val($.trim(response.choices[0].message.content))
 })
     }
   </script>
